@@ -33,7 +33,6 @@ int main(void)
     int second = 0;
     int sum = 0;
     int sumsum = 0;
-    do
     {
         //for the simple sum
         digit = luhn % 10;
@@ -44,7 +43,7 @@ int main(void)
         second = luhn % 10;
         luhn = luhn / 10;
         second = second * 2;
-        sumsum = (second % 10) + (second / 10);
+        sumsum = sumsum + (second % 10) + (second / 10);
     }
     while (luhn > 0);
     int luhnsum = sum + sumsum;
