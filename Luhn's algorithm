@@ -1,0 +1,52 @@
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void)
+{
+    //asking for card number
+    long card;
+    do
+    {
+        card = get_long ("Number: ");
+    }
+    while (card < 0);
+
+    //checking length
+    long length = card;
+    int l = 0;
+    while (length > 0)
+    {
+        length = length / 10;
+        l++;
+    }
+    printf("%i\n", l);
+
+    //if length is not 13, 15, 16 the card is invalid
+    if (l != 16 && l != 15 && l != 13)
+    {
+        printf("INVALID\n");
+    }
+
+    //Luhn's algorithm
+    long luhn = card;
+    int digit = 0;
+    int second = 0;
+    int sum = 0;
+    int sumsum = 0;
+    do
+    {
+        //for the simple sum
+        digit = luhn % 10;
+        luhn = luhn / 10;
+        sum = sum + digit;
+
+        //for the double sum
+        second = luhn % 10;
+        luhn = luhn / 10;
+        second = second * 2;
+        sumsum = (second % 10) + (second / 10);
+    }
+    while (luhn > 0);
+    int luhnsum = sum + sumsum;
+    printf("%i\n", luhnsum);
+}
