@@ -7,7 +7,7 @@ int main(void)
     long card;
     do
     {
-        card = get_long ("Number: ");
+        card = get_long("Number: ");
     }
     while (card < 0);
 
@@ -19,12 +19,12 @@ int main(void)
         length = length / 10;
         l++;
     }
-    printf("%i\n", l);
-
+    //printf("%i\n", l);
     //if length is not 13, 15, 16 the card is invalid
     if (l != 16 && l != 15 && l != 13)
     {
         printf("INVALID\n");
+        return 0;
     }
 
     //Luhn's algorithm
@@ -33,6 +33,7 @@ int main(void)
     int second = 0;
     int sum = 0;
     int sumsum = 0;
+    do
     {
         //for the simple sum
         digit = luhn % 10;
@@ -47,5 +48,48 @@ int main(void)
     }
     while (luhn > 0);
     int luhnsum = sum + sumsum;
-    printf("%i\n", luhnsum);
+    //printf("%i\n", luhnsum);
+
+    if (luhnsum % 10 != 0)
+    {
+        printf("INVALID\n");
+        return 0;
+    }
+
+    //checking the creditor
+    long check = card;
+    long twocheck = card;
+
+    //calculating first for visa
+    do
+    {
+        check = check / 10;
+    }
+    while (check > 10);
+
+    //calcilating two first numbers for amex & mc
+    do
+    {
+        twocheck = twocheck / 10;
+    }
+    while (twocheck > 100);
+
+    //printing the creditor
+    if ((l == 13 && check == 4) || (l == 16 && check == 4))
+    {
+        printf("VISA\n");
+    }
+    else if (l == 15 && (twocheck == 34 || twocheck == 37))
+    {
+        printf("AMEX\n");
+    }
+    else if (l == 16 && (twocheck == 51 || twocheck == 52 || twocheck == 53 || twocheck == 54 || twocheck == 55))
+    {
+        printf("MASTERCARD\n");
+    }
+    else
+    {
+        printf("INVALID\n");
+        return 0;
+    }
 }
